@@ -5,12 +5,10 @@
 To develop a neural network regression model for the given dataset.
 
 ## THEORY
-
-Explain the problem statement
+The Neural network model contains input layer,two hidden layers and output layer.Input layer contains a single neuron.Output layer also contains single neuron.First hidden layer contains six neurons and second hidden layer contains seven neurons.A neuron in input layer is connected with every neurons in a first hidden layer.Similarly,each neurons in first hidden layer is connected with all neurons in second hidden layer.All neurons in second hidden layer is connected with output layered neuron.Relu activation function is used here .It is linear neural network model(single input neuron forms single output neuron).
 
 ## Neural Network Model
-
-Include the neural network model diagram.
+![image](https://user-images.githubusercontent.com/75236145/187084682-888ef484-983a-4ec9-b538-f661b630d2b8.png)
 
 ## DESIGN STEPS
 
@@ -44,24 +42,57 @@ Evaluate the model with the testing data.
 
 ## PROGRAM
 
-Include your code here
+# Developed By:SURYA R
+# Register Number:212220230052
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+df=pd.read_csv("data2.csv")
+df.head()
+x=df[['input']].values
+x
+y=df[['output']].values
+y
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.3,random_state=40)
+
+scaler=MinMaxScaler()
+scaler.fit(xtrain)
+scaler.fit(xtest)
+xtrain1=scaler.transform(xtrain)
+xtest1=scaler.transform(xtest)
+
+model=Sequential([
+    Dense(6,activation='relu'),
+    Dense(7,activation='relu'),
+    Dense(1)
+])
+model.compile(optimizer='rmsprop',loss='mse')
+model.fit(xtrain1,ytrain,epochs=4000)
+lossmodel=pd.DataFrame(model.history.history)
+lossmodel.plot()
+model.evaluate(xtest1,ytest)
+
+xn1=[[40]]
+xn11=scaler.transform(xn1)
+model.predict(xn11)
+```
 
 ## Dataset Information
+![dataset](https://user-images.githubusercontent.com/75236145/187084598-b28e0ddc-25c0-45fa-b6a6-c08bca02ba12.jpeg)
 
-Include screenshot of the dataset
 
 ## OUTPUT
+### Test Data Root Mean Squared Error
+### New Sample Data Prediction
+![deep](https://user-images.githubusercontent.com/75236145/187084617-ff2b9aaa-5afc-4729-8de0-911441f66c2a.jpeg)
 
 ### Training Loss Vs Iteration Plot
+![deep1](https://user-images.githubusercontent.com/75236145/187084744-c0290a4f-4fdc-4c82-be57-f9c89d8023c4.jpeg)
 
-Include your plot here
-
-### Test Data Root Mean Squared Error
-
-Find the test data root mean squared error
-
-### New Sample Data Prediction
-
-Include your sample input and output here
 
 ## RESULT
+Thus,the neural network regression model for the given dataset is developed.
